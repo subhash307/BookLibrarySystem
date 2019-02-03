@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_BOOKS, DELETE_BOOK, GET_BOOK, DELETE_ALL_BOOKS } from "
 
 export const addBook = (book_library, history) => async dispatch => {
   try {
-    await axios.post("http://localhost:8080/api/board", book_library);
+    await axios.post("/api/board", book_library);
     history.push("/");
     dispatch({
       type: GET_ERRORS,
@@ -18,7 +18,7 @@ export const addBook = (book_library, history) => async dispatch => {
 };
 
 export const getBacklog = () => async dispatch => {
-  const res = await axios.get("http://localhost:8080/api/board/all");
+  const res = await axios.get("/api/board/all");
   dispatch({
     type: GET_BOOKS,
     payload: res.data
@@ -31,7 +31,7 @@ export const deleteBook = book_id => async dispatch => {
       `You are deleting book ${book_id}, this action cannot be undone`
     )
   ) {
-    await axios.delete( `http://localhost:8080/api/board/${book_id}`);
+    await axios.delete( `/api/board/${book_id}`);
     dispatch({
       type: DELETE_BOOK,
       payload: book_id
@@ -43,7 +43,7 @@ export const deleteBook = book_id => async dispatch => {
 
 export const getBook = (book_id, history) => async dispatch => {
   try {
-    const res = await axios.get(`http://localhost:8080/api/board/${book_id}`)
+    const res = await axios.get(`/api/board/${book_id}`)
     dispatch({
       type: GET_BOOK,
       payload: res.data
@@ -59,7 +59,7 @@ export const deleteAllBooks = () => async dispatch => {
       "You are deleting all the books, this action cannot be undone"
     )
   ) {
-    const res = await axios.delete( "http://localhost:8080/api/board/delete-all");
+    const res = await axios.delete( "/api/board/delete-all");
     dispatch({
       type: DELETE_ALL_BOOKS,
       payload: res.data
